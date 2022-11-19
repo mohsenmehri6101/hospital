@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
+            $table->comment('کیف پول');
             $table->tinyInteger('state')->comment('وضعیت کیف پول');
             $table->foreignId('user_id')->comment('شناسه کاربر')->constrained();
             $table->bigInteger('user_creator')->nullable()->comment('شناسه کاربر ایجاد کننده');

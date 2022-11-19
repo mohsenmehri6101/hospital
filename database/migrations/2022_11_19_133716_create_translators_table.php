@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('translators', function (Blueprint $table) {
             $table->id();
             $table->comment('مترجم');
+            $table->foreignId('user_id')->comment('شناسه کاربر')->constrained();
             $table->bigInteger('user_creator')->nullable()->comment('شناسه کاربر ایجاد کننده');
             $table->timestamps();
             $table->softDeletes();

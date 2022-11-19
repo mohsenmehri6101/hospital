@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('banks', function (Blueprint $table) {
             $table->id();
+            $table->comment('بانک ها');
             $table->string('name_persian');
             $table->string('name_english');
             $table->timestamps();

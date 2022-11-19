@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('patients', function (Blueprint $table) {
             $table->id();
             $table->comment('بیمار');
+            $table->foreignId('user_id')->comment('شناسه کاربر')->constrained();
             $table->bigInteger('user_creator')->nullable()->comment('شناسه کاربر ایجاد کننده');
             $table->timestamps();
             $table->softDeletes();
