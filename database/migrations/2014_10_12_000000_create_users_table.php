@@ -15,12 +15,20 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
+            $table->comment('اطلاعات مشترک کاربران');
+            $table->bigInteger('user_creator')->nullable()->comment('شناسه کاربر ایجاد کننده');
+            $table->string('name')->comment('نام');
+            $table->string('family')->comment('نام خانوادگی');
+            $table->string('username')->nullable()->comment('نام کاربری');
+            $table->string('email')->unique()->comment('آدرس');
+            $table->string('mobile')->nullable()->comment('شماره موبایل (برای لاگین)');
+            $table->string('national_code')->nullable()->comment('کد ملی');
+            $table->string('address')->nullable()->comment('آدرس');
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->string('password')->comment('رمز عبور');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
