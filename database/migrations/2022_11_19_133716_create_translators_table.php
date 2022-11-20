@@ -17,9 +17,15 @@ return new class extends Migration
             $table->id();
             $table->comment('مترجم');
             $table->foreignId('user_id')->comment('شناسه کاربر')->constrained();
+            $table->foreignId('language_id')->comment('شناسه کاربر')->constrained();
             $table->bigInteger('user_creator')->nullable()->comment('شناسه کاربر ایجاد کننده');
             $table->timestamps();
             $table->softDeletes();
+        });
+
+        Schema::create('language_translator', function (Blueprint $table) {
+            $table->foreignId('language_id')->comment('شناسه زبان')->constrained();
+            $table->foreignId('translator_id')->comment('شناسه مترجم')->constrained();
         });
     }
 
@@ -30,6 +36,7 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('language_translator');
         Schema::dropIfExists('translators');
     }
 };

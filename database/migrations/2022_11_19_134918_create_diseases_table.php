@@ -18,7 +18,7 @@ return new class extends Migration
             $table->comment('بیماری ها');
             $table->string('name')->comment('نام بیماری');
             $table->string('description')->comment('توضیح مختصر در مورد بیماری');
-            $table->string('amount')->nullable()->comment('');
+            $table->string('amount')->nullable()->comment('هزینه بیماری');
             $table->timestamps();
             $table->softDeletes();
         });

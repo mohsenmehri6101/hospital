@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->comment('اطلاعات مشترک کاربران');
             $table->bigInteger('user_creator')->nullable()->comment('شناسه کاربر ایجاد کننده');
-            $table->string('name')->comment('نام');
-            $table->string('family')->comment('نام خانوادگی');
+            $table->string('first_name')->comment('نام');
+            $table->string('last_name')->comment('نام خانوادگی');
             $table->string('username')->nullable()->comment('نام کاربری');
             $table->string('email')->unique()->comment('آدرس');
             $table->string('mobile')->nullable()->comment('شماره موبایل (برای لاگین)');
