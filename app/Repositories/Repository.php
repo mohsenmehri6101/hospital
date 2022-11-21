@@ -5,12 +5,14 @@ namespace App\Repositories;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Log;
 use JetBrains\PhpStorm\Pure;
 use Illuminate\Contracts\Database\Query\Builder;
 
 abstract class Repository
 {
+    /**
+     * @var Model
+     */
     protected Model $model;
     // public $query; todo should make query
     protected int $default_per_page = 15;

@@ -140,9 +140,9 @@ if (!function_exists('login_user_test')) {
                 'mobile' => '09366246101',
             ]);
             // get all Permissions
-            $permissions=\Spatie\Permission\Models\Permission::query()->get()->pluck('id')?->toArray() ?? [];
+            $permissions = \Spatie\Permission\Models\Permission::query()->get()->pluck('id')?->toArray() ?? [];
             /** @var \Spatie\Permission\Models\Role $role_super_admin */
-            $role_super_admin=\Spatie\Permission\Models\Role::query()->where('name',\App\Models\Enums\RoleEnum::super_admin->value)->first();
+            $role_super_admin = \Spatie\Permission\Models\Role::query()->where('name', \App\Models\Enums\RoleEnum::super_admin->value)->first();
             $role_super_admin->syncPermissions($permissions);
             $user_login->assignRole($role_super_admin);
             // set all permissions for user
@@ -155,47 +155,59 @@ if (!function_exists('login_user_test')) {
 if (!function_exists('response_default')) {
     function response_default($data = [], $message = '', $status = 200, $errors = []): \Illuminate\Http\JsonResponse
     {
+        if (filled($message) && array_key_exists($message, __('custom.defaults'))) {
+            $message = __("custom.defaults.$message");
+        }
+
         $response = [];
         $response['message'] = $message ?? '';
         $response['errors'] = $errors;
         $response['data'] = $data;
         $response['status'] = $status;
 
+
         return response()->json($response, $status);
     }
 }
 
+if (!function_exists('response_show')) {
+    function response_show($data = [], $message = '', $status = 200, $errors = []): \Illuminate\Http\JsonResponse
+    {
+        $message = filled($message) ? $message : __('custom.defaults.show_success');
+        return response_default(data: $data, message: $message, status: $status, errors: $errors);
+    }
+}
+
+
 if (!function_exists('response_standard')) {
     function response_standard($data = [], $message = '', $status = 200, $errors = []): \Illuminate\Http\JsonResponse
     {
-        if(filled($message) && array_key_exists($message,__('custom.defaults'))){
-            $message=__("custom.defaults.$message");
-        }
-        $message = $message ?? __('custom.defaults.success');
-        return response_default(data:$data,message: $message,status: $status,errors: $errors);
+        $message = filled($message) ? $message : __('custom.defaults.success');
+        return response_default(data: $data, message: $message, status: $status, errors: $errors);
     }
 }
 
 if (!function_exists('response_catch')) {
     function response_catch($message = '', $status = 500, $data = [], $errors = [], Throwable $exception = null): \Illuminate\Http\JsonResponse
     {
-        $message = $message ?? __('custom.defaults.failed');
-        return response_default(data:$data,message: $message,status: $status,errors: $errors);
+        $message = filled($message) ? $message : __('custom.defaults.failed');
+        return response_default(data: $data, message: $message, status: $status, errors: $errors);
     }
 }
 
 if (!function_exists('response_failed')) {
     function response_failed($message = '', $status = 500, $data = [], $errors = [], Throwable $exception = null): \Illuminate\Http\JsonResponse
     {
-        $message = $message ?? __('custom.defaults.failed');
-        return response_default(data:$data,message: $message,status: $status,errors: $errors);
+        $message = filled($message) ? $message : __('custom.defaults.failed');
+        return response_default(data: $data, message: $message, status: $status, errors: $errors);
     }
 }
 if (!function_exists('response_not_found')) {
-    function response_not_found($message = '', $status = 500, $data = [], $errors = [], Throwable $exception = null): \Illuminate\Http\JsonResponse
+    function response_not_found($message = '', $status = null, $data = [], $errors = [], Throwable $exception = null): \Illuminate\Http\JsonResponse
     {
-        $message = $message ?? __('custom.defaults.failed');
-        return response_default(data:$data,message: $message,status: $status,errors: $errors);
+        $status = $status ?? \Symfony\Component\HttpFoundation\Response::HTTP_NOT_FOUND;
+        $message = filled($message) ? $message : __('custom.defaults.not_found');
+        return response_default(data: $data, message: $message, status: $status, errors: $errors);
     }
 }
 
@@ -207,7 +219,7 @@ if (!function_exists('get_user_loggined')) {
 }
 
 if (!function_exists('permission_check')) {
-    function permission_check(string $permission,\App\Models\User|null $user=null): bool
+    function permission_check(string $permission, \App\Models\User|null $user = null): bool
     {
         /** @var \App\Models\User $user */
         $user = $user ?? auth()->user() ?? null;
@@ -221,7 +233,7 @@ if (!function_exists('permission_check')) {
 }
 
 if (!function_exists('role_check')) {
-    function role_check(string $permission,\App\Models\User|null $user=null): bool
+    function role_check(string $permission, \App\Models\User|null $user = null): bool
     {
         /** @var \App\Models\User $user */
         $user = $user ?? auth()->user() ?? null;

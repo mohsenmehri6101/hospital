@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Language;
 
 use App\Http\Controllers\Logic;
+use App\Http\Requests\Language\LanguageDestroyRequest;
 use App\Http\Requests\Language\LanguageIndexRequest;
 use App\Http\Requests\Language\LanguageStoreRequest;
 use App\Http\Requests\Language\LanguageUpdateRequest;
+use App\Models\Language;
 use App\Repositories\LanguageRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Exception;
 
 class LanguageLogic extends Logic
 {
@@ -25,7 +24,6 @@ class LanguageLogic extends Logic
         $inputs = $request->validated();
         return $this->languageRepository->resolve_paginate(inputs: $inputs);
     }
-
 
     public function store(LanguageStoreRequest $request)
     {
@@ -45,11 +43,9 @@ class LanguageLogic extends Logic
         return $this->languageRepository->update($language, $data);
     }
 
-
-    public function destroy(/*LanguageDestroyRequest*/Request $id)
+    public function destroy(LanguageDestroyRequest $id)
     {
         $language = $this->languageRepository->findOrFail($id);
         return $this->languageRepository->delete($language);
     }
-
 }
