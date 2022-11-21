@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Language;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Language\LanguageDestroyRequest;
 use App\Http\Requests\Language\LanguageStoreRequest;
 use App\Http\Requests\Language\LanguageUpdateRequest;
 use App\Http\Requests\Language\LanguageIndexRequest;
@@ -128,13 +127,13 @@ class LanguageController extends Controller
         return response_standard(data: $data,message: 'store_success');
     }
 
-    public function destroy(LanguageDestroyRequest $id)
+    public function destroy($id): JsonResponse
     {
         $status_destroy = $this->languageLogic->destroy($id);
-        return $status_destroy ? response_standard(message: __('custom.defaults.delete_success')) : response_standard(message: __('custom.defaults.delete_failed'), status: 500);
+        return $status_destroy ? response_standard(message: __('custom.defaults.delete_success')) : response_standard(message: __('custom.defaults.delete_failed'), status: \Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR/* 500 */);
     }
 
-    public function show($id)
+    public function show($id): JsonResponse
     {
         $language = $this->languageLogic->show($id);
         $response = ['language' => $language];

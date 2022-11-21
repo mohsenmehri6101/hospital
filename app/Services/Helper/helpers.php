@@ -202,10 +202,20 @@ if (!function_exists('response_failed')) {
         return response_default(data: $data, message: $message, status: $status, errors: $errors);
     }
 }
+
 if (!function_exists('response_not_found')) {
     function response_not_found($message = '', $status = null, $data = [], $errors = [], Throwable $exception = null): \Illuminate\Http\JsonResponse
     {
         $status = $status ?? \Symfony\Component\HttpFoundation\Response::HTTP_NOT_FOUND;
+        $message = filled($message) ? $message : __('custom.defaults.not_found');
+        return response_default(data: $data, message: $message, status: $status, errors: $errors);
+    }
+}
+
+if (!function_exists('response_validation_exception')) {
+    function response_validation_exception($message = '', $status = null, $data = [], $errors = [], Throwable $exception = null): \Illuminate\Http\JsonResponse
+    {
+        $status = $status ?? \Symfony\Component\HttpFoundation\Response::HTTP_UNPROCESSABLE_ENTITY;
         $message = filled($message) ? $message : __('custom.defaults.not_found');
         return response_default(data: $data, message: $message, status: $status, errors: $errors);
     }

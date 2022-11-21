@@ -13,4 +13,6 @@ class Language extends Model
     const DisableState=0;
 
     protected $fillable = ['name_english', 'name_persian'];
+
+//    protected $hidden=['created_at','updated_at'];
 }
