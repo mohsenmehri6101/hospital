@@ -1,0 +1,67 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "hospital Api Docs",
+        "version": "0.1"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000",
+            "description": "Demo API Server"
+        }
+    ],
+    "paths": {
+        "/api/languages/": {
+            "get": {
+                "tags": [
+                    "languages"
+                ],
+                "summary": "لیست زبان های ثبت شده در برنامه",
+                "operationId": "langugage_index",
+                "parameters": [
+                    {
+                        "name": "name_english",
+                        "in": "path",
+                        "description": "name_english",
+                        "required": false
+                    },
+                    {
+                        "name": "name_persian",
+                        "in": "path",
+                        "description": "name_persian",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "default": {
+                        "description": "Ha ocurrido un error."
+                    },
+                    "401": {
+                        "description": "No se ha autenticado, ingrese el token."
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

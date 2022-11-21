@@ -27,4 +27,5 @@ class LanguageStoreRequest extends CustomFormRequest
             'name_persian' => __('custom.languages.name_persian'),
         ];
     }
+
 }
